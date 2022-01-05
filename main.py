@@ -65,12 +65,6 @@ class MainWindow(QMainWindow):
 
         self.show()
 
-        useCustomTheme = False
-        themeFile = "themes\light.qss"
-        if useCustomTheme:
-            UIFunctions.theme(self, themeFile, True)
-            AppFunctions.setThemeHack(self)
-
         widgets.stackedWidget.setCurrentWidget(widgets.home)
         widgets.btn_home.setStyleSheet(UIFunctions.selectMenu(widgets.btn_home.styleSheet()))
 
