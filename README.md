@@ -37,7 +37,7 @@ python setup.py build
 ![ЭКРАН 2](https://i.ibb.co/JHyH7rF/1.png)
 ![ЭКРАН 3](https://i.ibb.co/jb3XXp0/2.png)
 ![ЭКРАН 5](https://i.ibb.co/xzKwgLB/5.png)
-![ЭКРАН 6](https://i.ibb.co/Bnw9hWG/3.png)
+![ЭКРАН 6](https://i.ibb.co/5WYzR2N/1.png)
 
 
 
