@@ -108,9 +108,6 @@ class MainWindow(QMainWindow):
                 self.main.show()
 
         if btnName == "btn_home":
-            for i in range(len(DBFunctions.select(self))):
-                DBFunctions.delete(self)
-            UIFunctions.tabletodb()
             widgets.stackedWidget.setCurrentWidget(widgets.home)
             UIFunctions.resetStyle(self, btnName)
             btn.setStyleSheet(UIFunctions.selectMenu(btn.styleSheet()))
