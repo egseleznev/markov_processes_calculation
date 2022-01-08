@@ -14,8 +14,7 @@ class DBFunctions():
 
         def insert(self, origin: str, transition: str, weight:str):
             conn = engine.connect()
-            ins = insert(transitions).values(origin_state= origin, transition_state= transition,
-                                                            transition_weight= weight)
+            ins = insert(transitions).values(origin_state= origin, transition_state= transition, transition_weight= weight)
             conn.execute(ins)
 
         def select(self):
