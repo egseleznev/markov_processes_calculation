@@ -22,8 +22,7 @@ class AppFunctions(MainWindow):
         with open(path,'rb') as infile:
             data=pickle.load(infile)
         for i in range(len(data)):
-            DBFunctions.insert(self, str(data[i])[0], str(data[i])[2],
-                               str(data[i])[4])
+            DBFunctions.insert(self, str(data[i])[0], str(data[i])[2], str(data[i])[4])
 
 
     def drawgraph(self):

@@ -160,6 +160,7 @@ class UIFunctions(MainWindow):
         self.ui.graph_label.setPixmap(pixmap)
         self.show()
 
+
     def addrow(self):
         self.ui.input_table.setFixedHeight((self.ui.input_table.height() + 20))
         self.ui.input_table.insertRow(self.ui.input_table.rowCount())
@@ -174,8 +175,8 @@ class UIFunctions(MainWindow):
 
     def cleartable(self):
         self.ui.input_table.setFixedHeight(50)
-        for i in range(self.ui.input_table.rowCount()):
-            self.ui.input_table.removeRow(i - 1)
+        self.ui.input_table.setRowCount(0)
+        self.ui.input_table.setRowCount(1)
 
     def uiDefinitions(self):
         def dobleClickMaximizeRestore(event):

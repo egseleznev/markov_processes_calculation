@@ -10,9 +10,7 @@ class DBFunctions():
             db_is_created = os.path.exists(db_name)
             if not db_is_created:
                 DB.database.create_db()
-            else:
-                for i in range(len(DBFunctions.select(self))):
-                    DBFunctions.delete(self)
+
 
         def insert(self, origin: str, transition: str, weight:str):
             conn = engine.connect()

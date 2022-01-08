@@ -1081,7 +1081,8 @@ class Ui_MainWindow(object):
         self.input_table.setGeometry(QRect(270, 20, 628, 100))
         sizePolicy2.setHeightForWidth(self.input_table.sizePolicy().hasHeightForWidth())
         self.input_table.setSizePolicy(sizePolicy2)
-        self.input_table.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        self.input_table.setEditTriggers(QAbstractItemView.AllEditTriggers)
+
         palette1 = QPalette()
         palette1.setBrush(QPalette.Active, QPalette.WindowText, brush)
         palette1.setBrush(QPalette.Active, QPalette.Button, brush1)
@@ -1167,26 +1168,6 @@ class Ui_MainWindow(object):
         icon5.addFile(u"images/icons/cil-plus.png", QSize(), QIcon.Normal, QIcon.Off)
         self.btn_add.setIcon(icon5)
         self.btn_add.setIconSize(QSize(80, 80))
-        self.btn_edit = QPushButton(self.home)
-        self.btn_edit.setObjectName(u"btn_edit")
-        self.btn_edit.setGeometry(QRect(1100, 40, 28, 28))
-        self.btn_edit.setMinimumSize(QSize(28, 28))
-        self.btn_edit.setMaximumSize(QSize(28, 28))
-        self.btn_edit.setCursor(QCursor(Qt.PointingHandCursor))
-        self.btn_edit.setStyleSheet(u"background-color: rgb(168, 166, 255);")
-        icon6 = QIcon()
-        icon6.addFile(u"images/icons/cil-pencil.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.btn_edit.setIcon(icon6)
-        self.btn_edit.setIconSize(QSize(80, 80))
-        self.btn_save_2 = QPushButton(self.home)
-        self.btn_save_2.setObjectName(u"btn_save_2")
-        self.btn_save_2.setGeometry(QRect(1100, 90, 28, 28))
-        self.btn_save_2.setMinimumSize(QSize(28, 28))
-        self.btn_save_2.setMaximumSize(QSize(28, 28))
-        self.btn_save_2.setCursor(QCursor(Qt.PointingHandCursor))
-        self.btn_save_2.setStyleSheet(u"background-color: rgb(168, 166, 255);")
-        icon7 = QIcon()
-        icon7.addFile(u"images/icons/cil-save.png", QSize(), QIcon.Normal, QIcon.Off)
         self.edit_label = QLabel(self.home)
         self.edit_label.setObjectName(u"edit_label")
         self.edit_label.setGeometry(QRect(1140, 46, 91, 16))
@@ -1202,9 +1183,6 @@ class Ui_MainWindow(object):
         self.remove_label = QLabel(self.home)
         self.remove_label.setObjectName(u"remove_label")
         self.remove_label.setGeometry(QRect(1140, 556, 141, 16))
-
-        self.btn_save_2.setIcon(icon7)
-        self.btn_save_2.setIconSize(QSize(80, 80))
 
         self.stackedWidget.addWidget(self.home)
         self.draw = QWidget()
@@ -1283,7 +1261,6 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
-        self.titleLeftDescription.setText(QCoreApplication.translate("MainWindow", u"Расчет марковских процессов", None))
         self.logo.setText("")
         self.toggleButton.setText(QCoreApplication.translate("MainWindow", u"Свернуть", None))
         self.btn_home.setText(QCoreApplication.translate("MainWindow", u"\u0414\u0430\u043d\u043d\u044b\u0435", None))
@@ -1292,15 +1269,10 @@ class Ui_MainWindow(object):
         self.btn_new.setText(QCoreApplication.translate("MainWindow", u"\u0417\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u044c", None))
         self.btn_save.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c", None))
         self.toggleLeftBox.setText(QCoreApplication.translate("MainWindow", u"\u041e \u043f\u0440\u043e\u0433\u0440\u0430\u043c\u043c\u0435", None))
-        self.extraLabel.setText(QCoreApplication.translate("MainWindow", u"Дополнительно", None))
+        self.extraLabel.setText(QCoreApplication.translate("MainWindow", u"Дополни6тельно", None))
         self.add_label.setText(QCoreApplication.translate("MainWindow",
                                                           u"\u0414\u043e\u0431\u0430\u0432\u0438\u0442\u044c \u0441\u0442\u0440\u043e\u043a\u0443",
                                                           None))
-        self.edit_label.setText(
-            QCoreApplication.translate("MainWindow", u"\u0418\u0437\u043c\u0435\u043d\u0438\u0442\u044c", None))
-        self.save_label.setText(QCoreApplication.translate("MainWindow",
-                                                           u"\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c \u0438\u0437\u043c\u0435\u043d\u0435\u043d\u0438\u044f",
-                                                           None))
         self.delete_label.setText(QCoreApplication.translate("MainWindow",
                                                              u"\u0423\u0434\u0430\u043b\u0438\u0442\u044c \u0441\u0442\u0440\u043e\u043a\u0443",
                                                              None))
