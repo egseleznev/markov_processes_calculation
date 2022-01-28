@@ -131,10 +131,23 @@ class UIFunctions(MainWindow):
 
     def tabletodb(self):
         for i in range(self.ui.input_table.rowCount()):
-            DBFunctions.insert(self,self.ui.input_table.item(i, 0).text(),self.ui.input_table.item(i, 1).text(),self.ui.input_table.item(i, 2).text())
+            DBFunctions.inserttransition(self,self.ui.input_table.item(i, 0).text(),self.ui.input_table.item(i, 1).text(),self.ui.input_table.item(i, 2).text())
+        for i in range(self.ui.input_table_2.rowCount()):
+            DBFunctions.insertdescription(self,self.ui.input_table_2.item(i, 0).text(), self.ui.input_table_2.item(i, 1).text())
+
+    def copydesc(self):
+        self.ui.input_table_5.setFixedHeight(100)
+        self.ui.input_table_5.setRowCount(1)
+        data = DBFunctions.selectdescription(self)
+        for i in range(len(data)):
+            if (i != 0):
+                self.ui.input_table_5.setRowCount(self.ui.input_table_5.rowCount() + 1)
+            self.ui.input_table_5.setFixedHeight((self.ui.input_table_5.height() + 20))
+            self.ui.input_table_5.setItem(i, 0, QTableWidgetItem(str(data[i]).split("~~")[0]))
+            self.ui.input_table_5.setItem(i, 1, QTableWidgetItem(str(data[i]).split("~~")[1]))
 
     def tableafterinsert(self):
-        data = DBFunctions.select(self)
+        data = DBFunctions.selecttransition(self)
         for i in range(len(data)):
             if (i != 0):
                 self.ui.input_table.setRowCount(self.ui.input_table.rowCount() + 1)
@@ -142,16 +155,24 @@ class UIFunctions(MainWindow):
             self.ui.input_table.setItem(i, 0, QTableWidgetItem(str(data[i])[0]))
             self.ui.input_table.setItem(i, 1, QTableWidgetItem(str(data[i])[2]))
             self.ui.input_table.setItem(i, 2, QTableWidgetItem(str(data[i])[4]))
+        data = DBFunctions.selectdescription(self)
+        for i in range(len(data)):
+            if (i != 0):
+                self.ui.input_table_2.setRowCount(self.ui.input_table_2.rowCount() + 1)
+            self.ui.input_table_2.setFixedHeight((self.ui.input_table_2.height() + 20))
+            self.ui.input_table_2.setItem(i, 0, QTableWidgetItem(str(data[i]).split("~~")[0]))
+            self.ui.input_table_2.setItem(i, 1, QTableWidgetItem(str(data[i]).split("~~")[1]))
 
     def printresult(self):
         self.ui.result_table.clearContents()
         self.ui.result_table.setRowCount(0)
         self.ui.result_table.setFixedHeight(100)
+        data = DBFunctions.selectdescription(self)
         result=AppFunctions.calculate(self)
         for i in range(len(result)):
             self.ui.result_table.setFixedHeight((self.ui.result_table.height()+25))
             self.ui.result_table.setRowCount(self.ui.result_table.rowCount() + 1)
-            self.ui.result_table.setItem(i, 0, QTableWidgetItem(str(i+1)));
+            self.ui.result_table.setItem(i, 0, QTableWidgetItem(str(data[i]).split("~~")[1]))
             self.ui.result_table.setItem(i, 1, QTableWidgetItem(str(result[i])))
 
     def picturer(self):
@@ -160,23 +181,39 @@ class UIFunctions(MainWindow):
         self.ui.graph_label.setPixmap(pixmap)
         self.show()
 
+    def addrow(self, flag):
+        if flag:
+            self.ui.input_table.setFixedHeight((self.ui.input_table.height() + 20))
+            self.ui.input_table.insertRow(self.ui.input_table.rowCount())
+            self.ui.input_table.setItem(self.ui.input_table.rowCount(), 0, QTableWidgetItem(str(1)))
+            self.ui.input_table.setItem(self.ui.input_table.rowCount(), 1, QTableWidgetItem(str(1)))
+            self.ui.input_table.setItem(self.ui.input_table.rowCount(), 2, QTableWidgetItem(str(1)))
+            self.ui.input_table.selectRow(self.ui.input_table.rowCount()+1)
+        else:
+            self.ui.input_table_2.setFixedHeight((self.ui.input_table_2.height() + 20))
+            self.ui.input_table_2.insertRow(self.ui.input_table_2.rowCount())
+            self.ui.input_table_2.setItem(self.ui.input_table_2.rowCount(), 0, QTableWidgetItem(str(1)))
+            self.ui.input_table_2.setItem(self.ui.input_table_2.rowCount(), 1, QTableWidgetItem(str(1)))
+            self.ui.input_table_2.setItem(self.ui.input_table_2.rowCount(), 2, QTableWidgetItem(str(1)))
+            self.ui.input_table_2.selectRow(self.ui.input_table_2.rowCount() + 1)
 
-    def addrow(self):
-        self.ui.input_table.setFixedHeight((self.ui.input_table.height() + 20))
-        self.ui.input_table.insertRow(self.ui.input_table.rowCount())
-        self.ui.input_table.setItem(self.ui.input_table.rowCount(), 0, QTableWidgetItem(str(1)))
-        self.ui.input_table.setItem(self.ui.input_table.rowCount(), 1, QTableWidgetItem(str(1)))
-        self.ui.input_table.setItem(self.ui.input_table.rowCount(), 2, QTableWidgetItem(str(1)))
-        self.ui.input_table.selectRow(self.ui.input_table.rowCount()+1)
+    def deleterow(self, flag):
+        if flag:
+            self.ui.input_table.removeRow(self.ui.input_table.rowCount()-1)
+            self.ui.input_table.setFixedHeight((self.ui.input_table.height() - 20))
+        else:
+            self.ui.input_table_2.removeRow(self.ui.input_table_2.rowCount()-1)
+            self.ui.input_table_2.setFixedHeight((self.ui.input_table_2.height() - 20))
 
-    def deleterow(self):
-        self.ui.input_table.removeRow(self.ui.input_table.rowCount()-1)
-        self.ui.input_table.setFixedHeight((self.ui.input_table.height() - 20))
-
-    def cleartable(self):
-        self.ui.input_table.setFixedHeight(50)
-        self.ui.input_table.setRowCount(0)
-        self.ui.input_table.setRowCount(1)
+    def cleartable(self, flag):
+        if flag:
+            self.ui.input_table.setFixedHeight(50)
+            self.ui.input_table.setRowCount(0)
+            self.ui.input_table.setRowCount(1)
+        else:
+            self.ui.input_table_2.setFixedHeight(50)
+            self.ui.input_table_2.setRowCount(0)
+            self.ui.input_table_2.setRowCount(1)
 
     def uiDefinitions(self):
         def dobleClickMaximizeRestore(event):
@@ -222,8 +259,12 @@ class UIFunctions(MainWindow):
         self.ui.minimizeAppBtn.clicked.connect(lambda: self.showMinimized())
 
         self.ui.maximizeRestoreAppBtn.clicked.connect(lambda: UIFunctions.maximize_restore(self))
-        
+
         self.ui.closeAppBtn.clicked.connect(lambda: self.close())
+        for i in range(len(DBFunctions.selecttransition(self))):
+            DBFunctions.deletetransition(self)
+        for i in range(len(DBFunctions.selectdescription(self))):
+            DBFunctions.deletedescription(self)
 
     def resize_grips(self):
         if Settings.ENABLE_CUSTOM_TITLE_BAR:

@@ -1,5 +1,6 @@
 from DB.database import session,db_name, engine
 from DB.transitions import *
+from DB.descriptions import *
 from sqlalchemy import insert, select, delete
 import os
 import DB
@@ -12,25 +13,39 @@ class DBFunctions():
                 DB.database.create_db()
 
 
-        def insert(self, origin: str, transition: str, weight:str):
+        def inserttransition(self, origin: str, transition: str, weight:str):
             conn = engine.connect()
             ins = insert(transitions).values(origin_state= origin, transition_state= transition,
                                                             transition_weight= weight)
             conn.execute(ins)
 
-        def select(self):
+        def selecttransition(self):
             result=list([])
             Session =session()
             for row in Session.query(transitions):
                 list.append(result,row)
             return result
 
-        def delete(self):
+        def deletetransition(self):
             conn=engine.connect()
             Session =session()
             dell = delete(transitions).where(transitions.id == Session.query(transitions).count())
             conn.execute(dell)
 
-        def rowcount(self):
+        def insertdescription(self, state: int, desc:str):
+            conn = engine.connect()
+            ins = insert(descriptions).values(state_number=state, description=desc)
+            conn.execute(ins)
+
+        def selectdescription(self):
+            result = list([])
             Session = session()
-            return Session.query(transitions).count()
+            for row in Session.query(descriptions):
+                list.append(result, row)
+            return result
+
+        def deletedescription(self):
+            conn = engine.connect()
+            Session = session()
+            dell = delete(descriptions).where(descriptions.id == Session.query(descriptions).count())
+            conn.execute(dell)

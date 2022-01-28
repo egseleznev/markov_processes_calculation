@@ -3,7 +3,7 @@ import os
 from cx_Freeze import setup, Executable
 
 # ADD FILES
-files = ['ASD.ico', 'themes/', 'images/']
+files = ['ASD.ico', 'themes/', 'images/', 'DejaVuSansCondensed.ttf']
 
 # TARGET
 target = Executable(

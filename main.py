@@ -31,8 +31,6 @@ class MainWindow(QMainWindow):
         widgets = self.ui
 
         DBFunctions.start(self)
-        for i in range(len(DBFunctions.select(self))):
-            DBFunctions.delete(self)
 
         Settings.ENABLE_CUSTOM_TITLE_BAR = True
         title = "Калькулятор марковских процессов"
@@ -55,6 +53,10 @@ class MainWindow(QMainWindow):
         widgets.btn_save.clicked.connect(self.buttonClick)
         widgets.btn_new.clicked.connect(self.buttonClick)
         widgets.btn_theme.clicked.connect(self.buttonClick)
+        widgets.btn_pdf.clicked.connect(self.buttonClick)
+        widgets.btn_add_3.clicked.connect(self.buttonClick)
+        widgets.btn_minus_3.clicked.connect(self.buttonClick)
+        widgets.btn_clear_3.clicked.connect(self.buttonClick)
 
         def openCloseLeftBox():
             UIFunctions.toggleLeftBox(self, True)
@@ -93,11 +95,16 @@ class MainWindow(QMainWindow):
                 AppFunctions.setThemeHack(self)
                 self.ui.btn_theme.setStyleSheet(u"background-image: url(:/icons/images/icons/cil-lightbulb.png);")
 
+        if btnName == "btn_pdf":
+            AppFunctions.printpdf(self)
+
         if btnName == "btn_calculate":
-            for i in range(len(DBFunctions.select(self))):
-                DBFunctions.delete(self)
-            UIFunctions.tabletodb(self)
             try:
+                for i in range(len(DBFunctions.selecttransition(self))):
+                    DBFunctions.deletetransition(self)
+                for i in range(len(DBFunctions.selectdescription(self))):
+                    DBFunctions.deletedescription(self)
+                UIFunctions.tabletodb(self)
                 UIFunctions.printresult(self)
                 widgets.stackedWidget.setCurrentWidget(widgets.calculation)
                 UIFunctions.resetStyle(self, btnName)
@@ -108,16 +115,15 @@ class MainWindow(QMainWindow):
                 self.main.show()
 
         if btnName == "btn_home":
-            for i in range(len(DBFunctions.select(self))):
-                DBFunctions.delete(self)
-            UIFunctions.tabletodb()
             widgets.stackedWidget.setCurrentWidget(widgets.home)
             UIFunctions.resetStyle(self, btnName)
             btn.setStyleSheet(UIFunctions.selectMenu(btn.styleSheet()))
 
         if btnName == "btn_save":
-            for i in range(len(DBFunctions.select(self))):
-                DBFunctions.delete(self)
+            for i in range(len(DBFunctions.selecttransition(self))):
+                DBFunctions.deletetransition(self)
+            for i in range(len(DBFunctions.selectdescription(self))):
+                DBFunctions.deletedescription(self)
             UIFunctions.tabletodb(self)
             path=tkinter.filedialog.askopenfilename()
             AppFunctions.serialize(self,path)
@@ -128,10 +134,13 @@ class MainWindow(QMainWindow):
             UIFunctions.tableafterinsert(self)
 
         if btnName == "btn_draw":
-            for i in range(len(DBFunctions.select(self))):
-                DBFunctions.delete(self)
-            UIFunctions.tabletodb(self)
             try:
+                UIFunctions.copydesc(self)
+                for i in range(len(DBFunctions.selecttransition(self))):
+                    DBFunctions.deletetransition(self)
+                for i in range(len(DBFunctions.selectdescription(self))):
+                    DBFunctions.deletedescription(self)
+                UIFunctions.tabletodb(self)
                 AppFunctions.drawgraph(self)
                 UIFunctions.picturer(self)
                 widgets.stackedWidget.setCurrentWidget(widgets.draw)
@@ -143,16 +152,28 @@ class MainWindow(QMainWindow):
                 self.main.show()
 
         if btnName == "btn_add":
-            UIFunctions.addrow(self)
+            UIFunctions.addrow(self, 1)
 
         if btnName == "btn_minus":
-            UIFunctions.deleterow(self)
-            DBFunctions.delete(self)
+            UIFunctions.deleterow(self, 1)
+            DBFunctions.deletetransition(self)
 
         if btnName == "btn_clear":
-            UIFunctions.cleartable(self)
-            for i in range(len(DBFunctions.select(self))):
-                DBFunctions.delete(self)
+            UIFunctions.cleartable(self, 1)
+            for i in range(len(DBFunctions.selecttransition(self))):
+                DBFunctions.deletetransition(self)
+
+        if btnName == "btn_add_3":
+            UIFunctions.addrow(self, 0)
+
+        if btnName == "btn_minus_3":
+            UIFunctions.deleterow(self, 0)
+            DBFunctions.deletedescription(self)
+
+        if btnName == "btn_clear_3":
+            UIFunctions.cleartable(self, 0)
+            for i in range(len(DBFunctions.selectdescription(self))):
+                DBFunctions.deletedescription(self)
 
     def mousePressEvent(self, event):
         self.dragPos = event.globalPosition().toPoint()

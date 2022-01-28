@@ -34,10 +34,10 @@ python setup.py build
 ```
 # СКРИНШОТЫ
 ![ЭКРАН 1](https://i.ibb.co/b6ydRjN/2.png)
-![ЭКРАН 2](https://i.ibb.co/JHyH7rF/1.png)
-![ЭКРАН 3](https://i.ibb.co/jb3XXp0/2.png)
+![ЭКРАН 2](https://i.ibb.co/rt2h6G7/3.png)
+![ЭКРАН 3](https://i.ibb.co/t32fkz1/4.png)
 ![ЭКРАН 5](https://i.ibb.co/xzKwgLB/5.png)
-![ЭКРАН 6](https://i.ibb.co/Bnw9hWG/3.png)
+![ЭКРАН 6](https://i.ibb.co/S7f89H1/6.png)
 
 
 
