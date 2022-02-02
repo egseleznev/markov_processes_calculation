@@ -1,10 +1,4 @@
-import sys
-import os
-import platform
-import time
-import tkinter.filedialog
-
-import PySide6.QtWidgets
+import sys, os, platform, time, tkinter.filedialog, PySide6.QtWidgets, sqlalchemy.sql.default_comparator, sqlalchemy.dialects.sqlite
 from PySide6 import QtCore, QtGui, QtWidgets
 from PySide6.QtCore import (QCoreApplication, QPropertyAnimation, QDate, QDateTime, QMetaObject, QObject, QPoint, QRect,
                             QSize, QTime, QUrl, Qt, QEvent)
@@ -16,12 +10,10 @@ from modules import *
 from widgets import *
 from ui_splash_screen import Ui_SplashScreen
 from noresult import Ui_NoResult
-from sqlalchemy import *
-import sqlalchemy.sql.default_comparator
-import sqlalchemy.dialects.sqlite
 
 widgets = None
 counter = 0
+
 class MainWindow(QMainWindow):
     def __init__(self):
         QMainWindow.__init__(self)
@@ -33,6 +25,7 @@ class MainWindow(QMainWindow):
         DBFunctions.start(self)
 
         Settings.ENABLE_CUSTOM_TITLE_BAR = True
+
         title = "Калькулятор марковских процессов"
         self.setWindowTitle(title)
         self.setWindowIcon(QIcon("ASD.ico"))
@@ -43,6 +36,14 @@ class MainWindow(QMainWindow):
 
         widgets.input_table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         widgets.result_table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        widgets.input_table_2.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        widgets.input_table_5.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+
+        transitions_delegate = TransitionsTableDelegate(self.ui.input_table)
+        self.ui.input_table.setItemDelegate(transitions_delegate)
+        UIFunctions.deleterow(self, 0); UIFunctions.deleterow(self, 1)
+        UIFunctions.addrow(self,0);  UIFunctions.addrow(self,1);
+
 
         widgets.btn_home.clicked.connect(self.buttonClick)
         widgets.btn_draw.clicked.connect(self.buttonClick)
@@ -57,6 +58,7 @@ class MainWindow(QMainWindow):
         widgets.btn_add_3.clicked.connect(self.buttonClick)
         widgets.btn_minus_3.clicked.connect(self.buttonClick)
         widgets.btn_clear_3.clicked.connect(self.buttonClick)
+
 
         def openCloseLeftBox():
             UIFunctions.toggleLeftBox(self, True)
@@ -75,12 +77,15 @@ class MainWindow(QMainWindow):
         widgets.stackedWidget.setCurrentWidget(widgets.home)
         widgets.btn_home.setStyleSheet(UIFunctions.selectMenu(widgets.btn_home.styleSheet()))
 
-    def buttonClick(self, useCustomTheme):
+    def buttonClick(self):
         btn = self.sender()
         btnName = btn.objectName()
 
-
         if btnName == "btn_theme":
+            widgets.stackedWidget.setCurrentWidget(widgets.home)
+            UIFunctions.resetStyle(self, "btn_draw")
+            UIFunctions.resetStyle(self, "btn_calculate")
+            widgets.btn_home.setStyleSheet(UIFunctions.selectMenu(widgets.btn_home.styleSheet()))
             if Settings.CHANGE_THEME:
                 themeFile = "themes\light.qss"
                 UIFunctions.theme(self, themeFile, True)
@@ -96,23 +101,23 @@ class MainWindow(QMainWindow):
                 self.ui.btn_theme.setStyleSheet(u"background-image: url(:/icons/images/icons/cil-lightbulb.png);")
 
         if btnName == "btn_pdf":
-            AppFunctions.printpdf(self)
+            try:
+                AppFunctions.printpdf(self)
+            except:
+                self.main = NoResult(2)
+                self.main.show()
 
         if btnName == "btn_calculate":
             try:
-                for i in range(len(DBFunctions.selecttransition(self))):
-                    DBFunctions.deletetransition(self)
-                for i in range(len(DBFunctions.selectdescription(self))):
-                    DBFunctions.deletedescription(self)
+                UIFunctions.clean_db(self)
                 UIFunctions.tabletodb(self)
                 UIFunctions.printresult(self)
+                self.ui.result_table.sortByColumn(1, Qt.DescendingOrder)
                 widgets.stackedWidget.setCurrentWidget(widgets.calculation)
                 UIFunctions.resetStyle(self, btnName)
                 btn.setStyleSheet(UIFunctions.selectMenu(btn.styleSheet()))
             except Exception:
-                print("Нет решений")
-                self.main = NoResult(True)
-                self.main.show()
+                self.main = NoResult(1)
 
         if btnName == "btn_home":
             widgets.stackedWidget.setCurrentWidget(widgets.home)
@@ -120,60 +125,100 @@ class MainWindow(QMainWindow):
             btn.setStyleSheet(UIFunctions.selectMenu(btn.styleSheet()))
 
         if btnName == "btn_save":
-            for i in range(len(DBFunctions.selecttransition(self))):
-                DBFunctions.deletetransition(self)
-            for i in range(len(DBFunctions.selectdescription(self))):
-                DBFunctions.deletedescription(self)
-            UIFunctions.tabletodb(self)
-            path=tkinter.filedialog.askopenfilename()
-            AppFunctions.serialize(self,path)
+            try:
+                UIFunctions.clean_db(self)
+                UIFunctions.tabletodb(self)
+                path = tkinter.filedialog.asksaveasfilename(initialfile='save.data')
+                AppFunctions.serialize(self, path)
+            except:
+                self.main = NoResult(2)
+                self.main.show()
+
 
         if btnName == "btn_new":
-            path = tkinter.filedialog.askopenfilename()
-            AppFunctions.deserialize(self,path)
-            UIFunctions.tableafterinsert(self)
+            try:
+                widgets.stackedWidget.setCurrentWidget(widgets.home)
+                UIFunctions.resetStyle(self, "btn_draw")
+                UIFunctions.resetStyle(self, "btn_calculate")
+                widgets.btn_home.setStyleSheet(UIFunctions.selectMenu(widgets.btn_home.styleSheet()))
+                path = tkinter.filedialog.askopenfilename()
+                UIFunctions.clean_db(self)
+                UIFunctions.clean_tables(self)
+                AppFunctions.deserialize(self,path)
+                UIFunctions.tableafterinsert(self)
+            except:
+                self.main = NoResult(2)
+                self.main.show()
+                UIFunctions.deleterow(self, 0);
+                UIFunctions.deleterow(self, 1)
+                UIFunctions.addrow(self, 0);
+                UIFunctions.addrow(self, 1);
 
         if btnName == "btn_draw":
             try:
                 UIFunctions.copydesc(self)
-                for i in range(len(DBFunctions.selecttransition(self))):
-                    DBFunctions.deletetransition(self)
-                for i in range(len(DBFunctions.selectdescription(self))):
-                    DBFunctions.deletedescription(self)
+                UIFunctions.clean_db(self)
                 UIFunctions.tabletodb(self)
                 AppFunctions.drawgraph(self)
                 UIFunctions.picturer(self)
+                self.ui.input_table_5.sortItems(0, Qt.AscendingOrder)
                 widgets.stackedWidget.setCurrentWidget(widgets.draw)
                 UIFunctions.resetStyle(self, btnName)
                 btn.setStyleSheet(UIFunctions.selectMenu(btn.styleSheet()))
             except:
-                print("Нет решений")
-                self.main = NoResult(False)
+                self.main = NoResult(0)
                 self.main.show()
 
         if btnName == "btn_add":
+            if self.ui.input_table.rowCount() != 0:
+                UIFunctions.clean_db(self)
+                UIFunctions.tabletodb(self)
             UIFunctions.addrow(self, 1)
 
         if btnName == "btn_minus":
-            UIFunctions.deleterow(self, 1)
-            DBFunctions.deletetransition(self)
+            try:
+                if self.ui.input_table.rowCount() != 0:
+                    UIFunctions.clean_db(self)
+                    UIFunctions.tabletodb(self)
+                UIFunctions.deleteselectedrow(self, 1)
+                DBFunctions.deletetransition(self)
+            except:
+                print("Нет решений")
+                self.main = NoResult(3)
+                self.main.show()
 
         if btnName == "btn_clear":
             UIFunctions.cleartable(self, 1)
             for i in range(len(DBFunctions.selecttransition(self))):
                 DBFunctions.deletetransition(self)
+            UIFunctions.deleterow(self, 1)
+            UIFunctions.addrow(self, 1)
 
         if btnName == "btn_add_3":
+            if self.ui.input_table_2.rowCount() != 0:
+                UIFunctions.clean_db(self)
+                UIFunctions.tabletodb(self)
             UIFunctions.addrow(self, 0)
 
         if btnName == "btn_minus_3":
-            UIFunctions.deleterow(self, 0)
-            DBFunctions.deletedescription(self)
+            try:
+                if self.ui.input_table_2.rowCount() != 0:
+                    UIFunctions.clean_db(self)
+                    UIFunctions.tabletodb(self)
+                UIFunctions.deleteselectedrow(self, 0)
+                DBFunctions.deletedescription(self)
+                UIFunctions.ifdeleted(self)
+            except:
+                print("Нет решений")
+                self.main = NoResult(3)
+                self.main.show()
 
         if btnName == "btn_clear_3":
             UIFunctions.cleartable(self, 0)
             for i in range(len(DBFunctions.selectdescription(self))):
                 DBFunctions.deletedescription(self)
+            UIFunctions.deleterow(self, 0)
+            UIFunctions.addrow(self, 0)
 
     def mousePressEvent(self, event):
         self.dragPos = event.globalPosition().toPoint()
@@ -197,7 +242,7 @@ class SplashScreen(QMainWindow):
 
         self.timer = QtCore.QTimer()
         self.timer.timeout.connect(self.progress)
-        
+
         self.timer.start(55)
 
         self.ui.label_description.setText("<strong>Одну</strong> секунду")
@@ -231,14 +276,21 @@ class NoResult(QMainWindow):
         title = "Ошибка"
         self.setWindowTitle(title)
         self.setWindowIcon(QIcon("ASD.ico"))
-        if flag:
+        if flag == 1:
             self.ui.label.setText("Нет решений")
-        else:
+        if flag == 0:
             self.ui.label.setText("Построить граф невозможно")
             self.ui.label.setFixedWidth(1000)
             self.setFixedWidth(715)
+        if flag == 2:
+            self.ui.label.setText("Попробуйте еще раз, выбрав файл")
+            self.ui.label.setFixedWidth(1100)
+            self.setFixedWidth(850)
+        if flag == 3:
+            self.ui.label.setText("Выберите строку, которую необходимо удалить")
+            self.ui.label.setFixedWidth(1250)
+            self.setFixedWidth(1100)
         self.show()
-
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

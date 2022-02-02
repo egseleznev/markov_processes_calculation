@@ -16,52 +16,35 @@ class AppFunctions(MainWindow):
         border-left: 22px solid qlineargradient(spread:pad, x1:0.034, y1:0, x2:0.216, y2:0, stop:0.499 rgb(168, 166, 255), stop:0.5 rgb(168, 166, 255));
         background-color: rgb(168, 166, 255);
         """
-        
-    def serialize(self, path: str):
-        with open(path,'wb') as outfile:
-            data = DBFunctions.selectdescription(self)+['#######']+DBFunctions.selecttransition(self)
-            pickle.dump(data, outfile)
-
-    def deserialize(self, path: str):
-            with open(path, 'rb') as infile:
-                data = pickle.load(infile)
-            for i in range(len(data[:data.index('#######')])):
-                DBFunctions.insertdescription(self, (str(data[:data.index('#######')][i]).split("~~")[0]),(str(data[:data.index('#######')][i]).split("~~")[1]))
-            for i in range(len(data[data.index('#######')+1:])):
-                DBFunctions.inserttransition(self, str(data[data.index('#######')+1:][i])[0], str(data[data.index('#######')+1:][i])[2],str(data[data.index('#######')+1:][i])[4])
 
     def drawgraph(self):
+        data = DBFunctions.selecttransition(self)
         vertex_union = []
-        from_vertex = list([])
-        to_vertex = list([])
-        weights_vertex = list([])
-        data=DBFunctions.selecttransition(self)
         for i in range(len(data)):
-            from_vertex.append(str(data[i])[0])
-            to_vertex.append(str(data[i])[2])
-            weights_vertex.append(str(data[i])[4])
-        vertex_union = []
-        for i in range(len(from_vertex)):
-            vertex_union.append([from_vertex[i], to_vertex[i], weights_vertex[i]])
+            if str(data[i])[0] == "#" or str(data[i])[2] == "#":
+                raise ValueError()
+            vertex_union.append([str(data[i])[0],str(data[i])[2], str(data[i])[4]])
         Graph = nx.DiGraph()
         Graph.add_weighted_edges_from(vertex_union)
-        labels = nx.get_edge_attributes(Graph, 'weight')
         pos = nx.planar_layout(Graph)
-        nx.draw_networkx_nodes(Graph, pos, node_size=300)
-        nx.draw_networkx_edges(Graph, pos, edgelist=Graph.edges(), edge_color='black')
-        nx.draw_networkx_edge_labels(Graph, pos, edge_labels=labels)
-        nx.draw_networkx_labels(Graph, pos)
-        nx.draw
-        plt.savefig("graph.png", dpi=125)
+        nx.draw(Graph, pos, with_labels=False, node_color='#475161', edge_color='#475161')
+        edge_weight = nx.get_edge_attributes(Graph, 'weight')
+        nx.draw_networkx_edge_labels(Graph, pos, edge_labels=edge_weight)
+        nx.draw_networkx_labels(Graph, pos, font_color="white")
+        if Settings.CHANGE_THEME:
+            plt.savefig("graph.png", facecolor="#282C34", dpi=125)
+        else:
+            plt.savefig("graph.png", facecolor="white", dpi=125)
+        plt.savefig("graph_pdf.png", facecolor="white", dpi=125)
         plt.clf()
-        from_vertex.clear()
-        to_vertex.clear()
-        weights_vertex.clear()
+        vertex_union.clear()
+
+
+
+
 
     def calculate(self):
         global kolmagorov_coefs_pdf
-        global normalization_pdf
-        global result_pdf
         from_vertex = list([])
         to_vertex = list([])
         weights_vertex = list([])
@@ -76,12 +59,10 @@ class AppFunctions(MainWindow):
         for i in range(len(unique_numbers)):
             for j in range(len(from_vertex)):
                 if from_vertex[j] == unique_numbers[i]:
-                    kolmagorov_coefs[i, from_vertex[j] - 1] = kolmagorov_coefs[i, from_vertex[j] - 1] - weights_vertex[
-                        j]
+                    kolmagorov_coefs[i, from_vertex[j] - 1] = kolmagorov_coefs[i, from_vertex[j] - 1] - weights_vertex[j]
             for k in range(len(to_vertex)):
                 if to_vertex[k] == unique_numbers[i]:
-                    kolmagorov_coefs[i, from_vertex[k] - 1] = kolmagorov_coefs[i, from_vertex[k] - 1] + weights_vertex[
-                        k]
+                    kolmagorov_coefs[i, from_vertex[k] - 1] = kolmagorov_coefs[i, from_vertex[k] - 1] + weights_vertex[k]
         kolmagorov_coefs[len(kolmagorov_coefs) - 1, :] = 1
         kolmagorov_coefs_pdf=kolmagorov_coefs
         normalization = np.zeros((len(unique_numbers)))
@@ -89,12 +70,25 @@ class AppFunctions(MainWindow):
         result = np.linalg.solve(kolmagorov_coefs, normalization)
         return result
 
+    def serialize(self, path: str):
+        with open(path, 'wb') as outfile:
+            data = DBFunctions.selectdescription(self)+['#######']+DBFunctions.selecttransition(self)
+            pickle.dump(data, outfile)
+
+    def deserialize(self, path: str):
+        with open(path, 'rb') as infile:
+            data = pickle.load(infile)
+        for i in range(len(data[:data.index('#######')])):
+            DBFunctions.insertdescription(self, str(data[:data.index('#######')][i]).split("~~")[0], str(data[:data.index('#######')][i]).split("~~")[1])
+        for i in range(len(data[data.index('#######')+1:])):
+            DBFunctions.inserttransition(self, str(data[data.index('#######')+1:][i])[0], str(data[data.index('#######')+1:][i])[2], str(data[data.index('#######')+1:][i])[4])
+
     def printpdf(self):
         pdf = FPDF()
         pdf.add_page()
         pdf.add_font('DeJaVu','','DejaVuSansCondensed.ttf', uni=True)
         pdf.set_font('DejaVu', size=16)
-        pdf.image('graph.png', x=30, y=95, w=150)
+        pdf.image('graph_pdf.png', x=30, y=95, w=150)
         col_width = pdf.w / 5
         row_height = pdf.font_size
         pdf.cell(200, 7, txt="Результаты расчета марковского процесса", ln=1, align="C")
@@ -138,7 +132,7 @@ class AppFunctions(MainWindow):
             pdf.ln(row_height)
 
         pdf.set_font('DejaVu', size=16)
-        sortlist=[]
+        sortlist = []
         buffer = ''
         for i in range(self.ui.result_table.rowCount()):
                 sortlist.append(float(self.ui.result_table.item(i, 1).text()))
@@ -154,6 +148,8 @@ class AppFunctions(MainWindow):
 
         pdf.set_font('DejaVu', size=10)
         pdf.set_x(55)
-        pdf.cell(100,75,txt="Расчеты произведены в приложении «Калькулятор марковских процессов» v1.0.1",ln=10,align="C")
-        path = tkinter.filedialog.askopenfilename()
+        pdf.cell(100,75,txt="Расчеты произведены в приложении «Калькулятор марковских процессов» v1.0.1", ln=10, align="C")
+
+
+        path = tkinter.filedialog.asksaveasfilename(initialfile='report.pdf')
         pdf.output(path)

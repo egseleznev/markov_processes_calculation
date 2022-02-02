@@ -1,7 +1,7 @@
 from DB.database import session,db_name, engine
 from DB.transitions import *
 from DB.descriptions import *
-from sqlalchemy import insert, select, delete
+from sqlalchemy import insert, delete
 import os
 import DB
 

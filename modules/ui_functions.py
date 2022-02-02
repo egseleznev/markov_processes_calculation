@@ -160,7 +160,9 @@ class UIFunctions(MainWindow):
             if (i != 0):
                 self.ui.input_table_2.setRowCount(self.ui.input_table_2.rowCount() + 1)
             self.ui.input_table_2.setFixedHeight((self.ui.input_table_2.height() + 20))
-            self.ui.input_table_2.setItem(i, 0, QTableWidgetItem(str(data[i]).split("~~")[0]))
+            item = QTableWidgetItem(QTableWidgetItem(str(data[i]).split("~~")[0]))
+            item.setFlags(QtCore.Qt.ItemIsEnabled)
+            self.ui.input_table_2.setItem(i, 0, item)
             self.ui.input_table_2.setItem(i, 1, QTableWidgetItem(str(data[i]).split("~~")[1]))
 
     def printresult(self):
@@ -172,46 +174,104 @@ class UIFunctions(MainWindow):
         for i in range(len(result)):
             self.ui.result_table.setFixedHeight((self.ui.result_table.height()+25))
             self.ui.result_table.setRowCount(self.ui.result_table.rowCount() + 1)
-            self.ui.result_table.setItem(i, 0, QTableWidgetItem(str(data[i]).split("~~")[1]))
-            self.ui.result_table.setItem(i, 1, QTableWidgetItem(str(result[i])))
+            for j in range(len(data)):
+                if i == int(str(data[j]).split("~~")[0])-1:
+                    self.ui.result_table.setItem(i, 0, QTableWidgetItem(str(data[j]).split("~~")[1]))
+                    self.ui.result_table.setItem(i, 1, QTableWidgetItem(str(result[i])))
+
+    def clean_tables(self):
+        UIFunctions.cleartable(self, 0)
+        UIFunctions.cleartable(self, 1)
+
+    def clean_db(self):
+        for i in range(len(DBFunctions.selecttransition(self))):
+            DBFunctions.deletetransition(self)
+        for i in range(len(DBFunctions.selectdescription(self))):
+            DBFunctions.deletedescription(self)
 
     def picturer(self):
-        self.ui.graph_label.setText("")
-        pixmap=QPixmap("graph.png")
-        self.ui.graph_label.setPixmap(pixmap)
+        #self.ui.graph_label.setText("")
+        #pixmap=QPixmap("graph.png")
+        #self.ui.graph_label.setPixmap(pixmap)
+        self.ui.btn_label.setIcon(QIcon('graph.png'))
+        self.ui.btn_label.setIconSize(QSize(800, 600))
         self.show()
 
     def addrow(self, flag):
         if flag:
             self.ui.input_table.setFixedHeight((self.ui.input_table.height() + 20))
             self.ui.input_table.insertRow(self.ui.input_table.rowCount())
-            self.ui.input_table.setItem(self.ui.input_table.rowCount(), 0, QTableWidgetItem(str(1)))
-            self.ui.input_table.setItem(self.ui.input_table.rowCount(), 1, QTableWidgetItem(str(1)))
-            self.ui.input_table.setItem(self.ui.input_table.rowCount(), 2, QTableWidgetItem(str(1)))
+            length = self.ui.input_table.rowCount();
+            self.ui.input_table.setItem(length-1, 0, QTableWidgetItem("1"))
+            self.ui.input_table.setItem(length-1, 1, QTableWidgetItem("1"))
+            self.ui.input_table.setItem(length-1, 2, QTableWidgetItem("1"))
             self.ui.input_table.selectRow(self.ui.input_table.rowCount()+1)
         else:
             self.ui.input_table_2.setFixedHeight((self.ui.input_table_2.height() + 20))
             self.ui.input_table_2.insertRow(self.ui.input_table_2.rowCount())
-            self.ui.input_table_2.setItem(self.ui.input_table_2.rowCount(), 0, QTableWidgetItem(str(1)))
-            self.ui.input_table_2.setItem(self.ui.input_table_2.rowCount(), 1, QTableWidgetItem(str(1)))
-            self.ui.input_table_2.setItem(self.ui.input_table_2.rowCount(), 2, QTableWidgetItem(str(1)))
-            self.ui.input_table_2.selectRow(self.ui.input_table_2.rowCount() + 1)
+            length = self.ui.input_table_2.rowCount()
+            item =QTableWidgetItem(str(self.ui.input_table_2.rowCount()))
+            item.setFlags(QtCore.Qt.ItemIsEnabled)
+            self.ui.input_table_2.setItem(length-1, 0, QTableWidgetItem(item))
+            if length == 1:
+                self.ui.input_table_2.setItem(length-1, 1, QTableWidgetItem("Введите описание состояния здесь"))
+            else:
+                self.ui.input_table_2.setItem(length - 1, 1, QTableWidgetItem(""))
 
     def deleterow(self, flag):
         if flag:
             self.ui.input_table.removeRow(self.ui.input_table.rowCount()-1)
             self.ui.input_table.setFixedHeight((self.ui.input_table.height() - 20))
+            self.ui.input_table.selectRow(self.ui.input_table.rowCount())
         else:
             self.ui.input_table_2.removeRow(self.ui.input_table_2.rowCount()-1)
             self.ui.input_table_2.setFixedHeight((self.ui.input_table_2.height() - 20))
+            self.ui.input_table_2.selectRow(self.ui.input_table_2.rowCount())
+
+
+    def ifdeleted(self):
+        self.ui.input_table_2.selectRow(0)
+        length = self.ui.input_table_2.rowCount()
+        for i in range(length):
+            if int(self.ui.input_table_2.item(i, 0).text()) != i+1:
+                for j in range(self.ui.input_table.rowCount()):
+                    if self.ui.input_table.item(j, 0).text() != "#":
+                        if int(self.ui.input_table.item(j, 0).text()) == int(self.ui.input_table_2.item(i, 0).text()):
+                            self.ui.input_table.setItem(j, 0, QTableWidgetItem(str(int(self.ui.input_table_2.item(i, 0).text())-1)))
+                    if self.ui.input_table.item(j, 1).text() != "#":
+                        if int(self.ui.input_table.item(j, 1).text()) == int(self.ui.input_table_2.item(i, 0).text()):
+                            self.ui.input_table.setItem(j, 1, QTableWidgetItem(str(int(self.ui.input_table_2.item(i, 0).text())-1)))
+
+            item = QTableWidgetItem(str(i+1))
+            item.setFlags(QtCore.Qt.ItemIsEnabled)
+            self.ui.input_table_2.setItem(i, 0, item)
+
+    def deleteselectedrow(self, flag):
+        if flag:
+                self.ui.input_table.removeRow(self.ui.input_table.selectionModel().selectedRows()[0].row())
+                self.ui.input_table.setFixedHeight((self.ui.input_table.height() - 20))
+                self.ui.input_table.selectRow(self.ui.input_table.rowCount())
+        else:
+
+                for i in range(self.ui.input_table.rowCount()):
+                   if self.ui.input_table.item(i, 0).text() != "#":
+                        if int(self.ui.input_table.item(i, 0).text()) == int(self.ui.input_table_2.item(self.ui.input_table_2.selectionModel().selectedRows()[0].row(),0).text()):
+                            self.ui.input_table.setItem(i, 0, QTableWidgetItem("#"))
+                   if self.ui.input_table.item(i, 1).text() != "#":
+                        if int(self.ui.input_table.item(i, 1).text()) == int(self.ui.input_table_2.item(self.ui.input_table_2.selectionModel().selectedRows()[0].row(),0).text()):
+                            self.ui.input_table.setItem(i, 1, QTableWidgetItem("#"))
+
+                self.ui.input_table_2.removeRow(self.ui.input_table_2.selectionModel().selectedRows()[0].row())
+                self.ui.input_table_2.setFixedHeight((self.ui.input_table_2.height() - 20))
+                self.ui.input_table_2.selectRow(self.ui.input_table_2.rowCount())
 
     def cleartable(self, flag):
         if flag:
-            self.ui.input_table.setFixedHeight(50)
+            self.ui.input_table.setFixedHeight(100)
             self.ui.input_table.setRowCount(0)
             self.ui.input_table.setRowCount(1)
         else:
-            self.ui.input_table_2.setFixedHeight(50)
+            self.ui.input_table_2.setFixedHeight(100)
             self.ui.input_table_2.setRowCount(0)
             self.ui.input_table_2.setRowCount(1)
 

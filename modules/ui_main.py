@@ -1053,7 +1053,7 @@ class Ui_MainWindow(object):
         self.result_table.setSelectionBehavior(QAbstractItemView.SelectRows)
         self.result_table.setShowGrid(True)
         self.result_table.setGridStyle(Qt.SolidLine)
-        self.result_table.setSortingEnabled(False)
+        self.result_table.setSortingEnabled(True)
         self.result_table.horizontalHeader().setVisible(True)
         self.result_table.horizontalHeader().setCascadingSectionResizes(True)
         self.result_table.horizontalHeader().setDefaultSectionSize(200)
@@ -1093,6 +1093,10 @@ class Ui_MainWindow(object):
         self.input_table_2.setGeometry(QRect(20, 20, 441, 100))
         sizePolicy2.setHeightForWidth(self.input_table_2.sizePolicy().hasHeightForWidth())
         self.input_table_2.setSizePolicy(sizePolicy2)
+        if (self.input_table_2.rowCount() < 1):
+            self.input_table_2.setRowCount(1)
+        __qtablewidgetitem9 = QTableWidgetItem()
+        self.input_table_2.setItem(0, 1, __qtablewidgetitem9)
         palette2 = QPalette()
         palette2.setBrush(QPalette.Active, QPalette.WindowText, brush)
         palette2.setBrush(QPalette.Active, QPalette.Button, brush1)
@@ -1106,7 +1110,7 @@ class Ui_MainWindow(object):
         icon6.addFile(u"images/icons/cil-plus.png", QSize(), QIcon.Normal, QIcon.Off)
         self.btn_minus_3 = QPushButton(self.home)
         self.btn_minus_3.setObjectName(u"btn_minus_3")
-        self.btn_minus_3.setGeometry(QRect(460, 490, 28, 28))
+        self.btn_minus_3.setGeometry(QRect(460, 500, 28, 28))
         self.btn_minus_3.setMinimumSize(QSize(28, 28))
         self.btn_minus_3.setMaximumSize(QSize(28, 28))
         self.btn_minus_3.setCursor(QCursor(Qt.PointingHandCursor))
@@ -1115,7 +1119,7 @@ class Ui_MainWindow(object):
         self.btn_minus_3.setStyleSheet(u"background-color: rgb(168, 166, 255);")
         self.btn_clear_3 = QPushButton(self.home)
         self.btn_clear_3.setObjectName(u"btn_clear_3")
-        self.btn_clear_3.setGeometry(QRect(460, 540, 28, 28))
+        self.btn_clear_3.setGeometry(QRect(460, 550, 28, 28))
         self.btn_clear_3.setMinimumSize(QSize(28, 28))
         self.btn_clear_3.setMaximumSize(QSize(28, 28))
         self.btn_clear_3.setCursor(QCursor(Qt.PointingHandCursor))
@@ -1124,13 +1128,13 @@ class Ui_MainWindow(object):
         self.btn_clear_3.setStyleSheet(u"background-color: rgb(168, 166, 255);")
         self.remove_label_3 = QLabel(self.home)
         self.remove_label_3.setObjectName(u"remove_label_3")
-        self.remove_label_3.setGeometry(QRect(500, 546, 141, 16))
+        self.remove_label_3.setGeometry(QRect(500, 556, 141, 16))
         self.add_label_3 = QLabel(self.home)
         self.add_label_3.setObjectName(u"add_label_3")
-        self.add_label_3.setGeometry(QRect(500, 445, 141, 16))
+        self.add_label_3.setGeometry(QRect(500, 455, 141, 16))
         self.delete_label_3 = QLabel(self.home)
         self.delete_label_3.setObjectName(u"delete_label_3")
-        self.delete_label_3.setGeometry(QRect(500, 495, 141, 16))
+        self.delete_label_3.setGeometry(QRect(500, 505, 141, 16))
         self.label_1 = QLabel(self.home)
         self.label_1.setObjectName(u"label_1")
         self.label_1.setGeometry(QRect(110, -10, 221, 41))
@@ -1148,7 +1152,7 @@ class Ui_MainWindow(object):
         self.label_2.setAlignment(Qt.AlignCenter)
         self.btn_add_3 = QPushButton(self.home)
         self.btn_add_3.setObjectName(u"btn_add_3")
-        self.btn_add_3.setGeometry(QRect(460, 440, 28, 28))
+        self.btn_add_3.setGeometry(QRect(460, 450, 28, 28))
         self.btn_add_3.setMinimumSize(QSize(28, 28))
         self.btn_add_3.setMaximumSize(QSize(28, 28))
         self.btn_add_3.setCursor(QCursor(Qt.PointingHandCursor))
@@ -1163,7 +1167,7 @@ class Ui_MainWindow(object):
         self.input_table_2.setSelectionBehavior(QAbstractItemView.SelectRows)
         self.input_table_2.setShowGrid(True)
         self.input_table_2.setGridStyle(Qt.SolidLine)
-        self.input_table_2.setSortingEnabled(False)
+        self.input_table_2.setSortingEnabled(True)
         self.input_table_2.horizontalHeader().setVisible(True)
         self.input_table_2.horizontalHeader().setCascadingSectionResizes(True)
         self.input_table_2.horizontalHeader().setDefaultSectionSize(200)
@@ -1192,7 +1196,7 @@ class Ui_MainWindow(object):
         self.input_table.setEditTriggers(QAbstractItemView.AllEditTriggers)
         self.btn_add_3 = QPushButton(self.home)
         self.btn_add_3.setObjectName(u"btn_add_3")
-        self.btn_add_3.setGeometry(QRect(460, 440, 28, 28))
+        self.btn_add_3.setGeometry(QRect(460, 450, 28, 28))
         self.btn_add_3.setMinimumSize(QSize(28, 28))
         self.btn_add_3.setMaximumSize(QSize(28, 28))
         self.btn_add_3.setCursor(QCursor(Qt.PointingHandCursor))
@@ -1302,6 +1306,9 @@ class Ui_MainWindow(object):
         self.stackedWidget.addWidget(self.home)
         self.draw = QWidget()
         self.draw.setObjectName(u"draw")
+        self.btn_label = QPushButton(self.draw)
+        self.btn_label.setObjectName(u"btn_label")
+        self.btn_label.setGeometry(QRect(20, 0, 800, 600))
         self.input_table_5 = QTableWidget(self.draw)
         if (self.input_table_5.columnCount() < 2):
             self.input_table_5.setColumnCount(2)
@@ -1317,7 +1324,6 @@ class Ui_MainWindow(object):
         self.input_table_5.setGeometry(QRect(920, 30, 441, 100))
         sizePolicy2.setHeightForWidth(self.input_table_5.sizePolicy().hasHeightForWidth())
         self.input_table_5.setSizePolicy(sizePolicy2)
-        self.input_table_5.setEditTriggers(QAbstractItemView.NoEditTriggers)
         palette3 = QPalette()
         palette3.setBrush(QPalette.Active, QPalette.WindowText, brush)
         palette3.setBrush(QPalette.Active, QPalette.Button, brush1)
@@ -1360,7 +1366,7 @@ class Ui_MainWindow(object):
         self.input_table_5.setSelectionBehavior(QAbstractItemView.SelectRows)
         self.input_table_5.setShowGrid(True)
         self.input_table_5.setGridStyle(Qt.SolidLine)
-        self.input_table_5.setSortingEnabled(False)
+        self.input_table_5.setSortingEnabled(True)
         self.input_table_5.horizontalHeader().setVisible(True)
         self.input_table_5.horizontalHeader().setCascadingSectionResizes(True)
         self.input_table_5.horizontalHeader().setDefaultSectionSize(200)
@@ -1369,10 +1375,7 @@ class Ui_MainWindow(object):
         self.input_table_5.verticalHeader().setCascadingSectionResizes(False)
         self.input_table_5.verticalHeader().setHighlightSections(False)
         self.input_table_5.verticalHeader().setStretchLastSection(True)
-        self.graph_label = QLabel(self.draw)
-        self.graph_label.setObjectName(u"graph_label")
-        self.graph_label.setGeometry(QRect(30, 20, 750, 585))
-        self.graph_label.setAlignment(Qt.AlignCenter)
+        self.input_table_5.setEditTriggers(QAbstractItemView.NoEditTriggers)
         self.stackedWidget.addWidget(self.draw)
 
         self.verticalLayout_15.addWidget(self.stackedWidget)
@@ -1506,6 +1509,7 @@ class Ui_MainWindow(object):
 #if QT_CONFIG(tooltip)
         self.closeAppBtn.setToolTip(QCoreApplication.translate("MainWindow", u"Close", None))
 #endif // QT_CONFIG(tooltip)
+        self.btn_label.setText("")
         self.closeAppBtn.setText("")
         self.btn_pdf.setToolTip(QCoreApplication.translate("MainWindow", u"Сформировать pdf", None))
         # endif // QT_CONFIG(tooltip)
@@ -1522,9 +1526,14 @@ class Ui_MainWindow(object):
                                                                 u"\u041e\u043f\u0438\u0441\u0430\u043d\u0438\u0435 \u0441\u043e\u0441\u0442\u043e\u044f\u043d\u0438\u044f",
                                                                 None));
         ___qtablewidgetitem8 = self.input_table_2.verticalHeaderItem(0)
+        ___qtablewidgetitem9 = self.input_table_2.item(0, 1)
+        ___qtablewidgetitem9.setText(QCoreApplication.translate("MainWindow",
+                                                                u"\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043e\u043f\u0438\u0441\u0430\u043d\u0438\u0435 \u0441\u043e\u0441\u0442\u043e\u044f\u043d\u0438\u044f \u0437\u0434\u0435\u0441\u044c",
+                                                                None));
         ___qtablewidgetitem8.setText(QCoreApplication.translate("MainWindow",
                                                                 u"\u041d\u043e\u0432\u0430\u044f \u0441\u0442\u0440\u043e\u043a\u0430",
                                                                 None));
+
         ___qtablewidgetitem = self.result_table.horizontalHeaderItem(0)
         ___qtablewidgetitem.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043e\u0441\u0442\u043e\u044f\u043d\u0438\u0435", None));
         ___qtablewidgetitem1 = self.result_table.horizontalHeaderItem(1)
@@ -1537,7 +1546,6 @@ class Ui_MainWindow(object):
         ___qtablewidgetitem4.setText(QCoreApplication.translate("MainWindow", u"\u0418\u043d\u0442\u0435\u043d\u0441\u0438\u0432\u043d\u043e\u0441\u0442\u044c", None));
         ___qtablewidgetitem5 = self.input_table.verticalHeaderItem(0)
         ___qtablewidgetitem5.setText(QCoreApplication.translate("MainWindow", u"\u041d\u043e\u0432\u0430\u044f \u0441\u0442\u0440\u043e\u043a\u0430", None));
-        self.graph_label.setText(QCoreApplication.translate("MainWindow", u"\u0430\u0444\u044b\u0430\u0444\u044b\u0430\u0444\u044b\u0430", None))
         self.label_1.setText(QCoreApplication.translate("MainWindow",
                                                         u"\u0422\u0430\u0431\u043b\u0438\u0446\u0430 \u043e\u043f\u0438\u0441\u0430\u043d\u0438\u044f \u0441\u043e\u0441\u0442\u043e\u044f\u043d\u0438\u0439",
                                                         None))
