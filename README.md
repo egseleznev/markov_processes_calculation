@@ -37,9 +37,9 @@ python main.py
 python setup.py build
 ```
 # СКРИНШОТЫ
-![ЭКРАН 1](https://i.ibb.co/b6ydRjN/2.png)
+![ЭКРАН 1](https://i.ibb.co/b6ydRjN/2.png)!
 ![1](https://user-images.githubusercontent.com/79448643/152172930-08732256-ad14-4cad-b8b4-bef859dd29d1.png)
-![2](https://user-images.githubusercontent.com/79448643/152172937-19487961-a82d-410a-a798-cca24eb9bd77.png)
+[1](https://user-images.githubusercontent.com/79448643/153218680-2844b31d-7bbb-47f3-bf37-27e92ff72ccc.png)
 ![3](https://user-images.githubusercontent.com/79448643/152172939-715f17ec-6423-42fe-a1fa-d22d324c8acb.png)
 ![4](https://user-images.githubusercontent.com/79448643/152172943-d98e9caf-d0bb-4347-8294-23b955cbb654.png)
 ![5](https://user-images.githubusercontent.com/79448643/152172948-78e25eb7-9fb0-4e66-b165-e614cd910cc1.png)
