@@ -169,7 +169,6 @@ class MainWindow(QMainWindow):
                 UIFunctions.addrow(self, 1);
 
         if btnName == "btn_draw":
-            try:
                 UIFunctions.copydesc(self)
                 UIFunctions.clean_db(self)
                 UIFunctions.tabletodb(self)
@@ -179,9 +178,6 @@ class MainWindow(QMainWindow):
                 widgets.stackedWidget.setCurrentWidget(widgets.draw)
                 UIFunctions.resetStyle(self, btnName)
                 btn.setStyleSheet(UIFunctions.selectMenu(btn.styleSheet()))
-            except:
-                self.main = NoResult(0)
-                self.main.show()
 
         if btnName == "btn_add":
             if self.ui.input_table.rowCount() != 0:

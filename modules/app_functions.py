@@ -23,7 +23,7 @@ class AppFunctions(MainWindow):
         for i in range(len(data)):
             if str(data[i])[0] == "#" or str(data[i])[2] == "#":
                 raise ValueError()
-            vertex_union.append([str(data[i])[0],str(data[i])[2], str(data[i])[4]])
+            vertex_union.append([str(data[i]).split(" ")[0],str(data[i]).split(" ")[1], str(data[i]).split(" ")[2]])
         Graph = nx.DiGraph()
         Graph.add_weighted_edges_from(vertex_union)
         pos = nx.planar_layout(Graph)
