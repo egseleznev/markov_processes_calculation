@@ -7,7 +7,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1500</width>
+    <width>1544</width>
     <height>720</height>
    </rect>
   </property>
@@ -1625,7 +1625,7 @@ p, li { white-space: pre-wrap; }
                       <string notr="true">background: transparent;</string>
                      </property>
                      <property name="currentIndex">
-                      <number>0</number>
+                      <number>2</number>
                      </property>
                      <widget class="QWidget" name="calculation">
                       <widget class="QTableWidget" name="result_table">
@@ -1995,7 +1995,7 @@ p, li { white-space: pre-wrap; }
                          <x>610</x>
                          <y>20</y>
                          <width>628</width>
-                         <height>561</height>
+                         <height>171</height>
                         </rect>
                        </property>
                        <property name="sizePolicy">
@@ -2276,7 +2276,7 @@ p, li { white-space: pre-wrap; }
                        <property name="geometry">
                         <rect>
                          <x>1250</x>
-                         <y>550</y>
+                         <y>540</y>
                          <width>28</width>
                          <height>28</height>
                         </rect>
@@ -2298,6 +2298,9 @@ p, li { white-space: pre-wrap; }
                        </property>
                        <property name="toolTip">
                         <string>Minimize</string>
+                       </property>
+                       <property name="styleSheet">
+                        <string notr="true">background-color: rgb(189, 147, 249);</string>
                        </property>
                        <property name="text">
                         <string/>
@@ -2317,7 +2320,7 @@ p, li { white-space: pre-wrap; }
                        <property name="geometry">
                         <rect>
                          <x>1250</x>
-                         <y>500</y>
+                         <y>490</y>
                          <width>28</width>
                          <height>28</height>
                         </rect>
@@ -2339,6 +2342,9 @@ p, li { white-space: pre-wrap; }
                        </property>
                        <property name="toolTip">
                         <string>Minimize</string>
+                       </property>
+                       <property name="styleSheet">
+                        <string notr="true">background-color: rgb(189, 147, 249);</string>
                        </property>
                        <property name="text">
                         <string/>
@@ -2358,7 +2364,7 @@ p, li { white-space: pre-wrap; }
                        <property name="geometry">
                         <rect>
                          <x>1250</x>
-                         <y>450</y>
+                         <y>440</y>
                          <width>28</width>
                          <height>28</height>
                         </rect>
@@ -2381,6 +2387,9 @@ p, li { white-space: pre-wrap; }
                        <property name="toolTip">
                         <string>Minimize</string>
                        </property>
+                       <property name="styleSheet">
+                        <string notr="true">background-color: rgb(189, 147, 249);</string>
+                       </property>
                        <property name="text">
                         <string/>
                        </property>
@@ -2399,7 +2408,7 @@ p, li { white-space: pre-wrap; }
                        <property name="geometry">
                         <rect>
                          <x>1290</x>
-                         <y>455</y>
+                         <y>445</y>
                          <width>141</width>
                          <height>16</height>
                         </rect>
@@ -2412,7 +2421,7 @@ p, li { white-space: pre-wrap; }
                        <property name="geometry">
                         <rect>
                          <x>1290</x>
-                         <y>505</y>
+                         <y>495</y>
                          <width>141</width>
                          <height>16</height>
                         </rect>
@@ -2425,7 +2434,7 @@ p, li { white-space: pre-wrap; }
                        <property name="geometry">
                         <rect>
                          <x>1290</x>
-                         <y>556</y>
+                         <y>545</y>
                          <width>141</width>
                          <height>16</height>
                         </rect>
@@ -2440,7 +2449,7 @@ p, li { white-space: pre-wrap; }
                          <x>20</x>
                          <y>20</y>
                          <width>441</width>
-                         <height>561</height>
+                         <height>171</height>
                         </rect>
                        </property>
                        <property name="sizePolicy">
@@ -2739,6 +2748,9 @@ p, li { white-space: pre-wrap; }
                        <property name="toolTip">
                         <string>Minimize</string>
                        </property>
+                       <property name="styleSheet">
+                        <string notr="true">background-color: rgb(189, 147, 249);</string>
+                       </property>
                        <property name="text">
                         <string/>
                        </property>
@@ -2779,6 +2791,9 @@ p, li { white-space: pre-wrap; }
                        </property>
                        <property name="toolTip">
                         <string>Minimize</string>
+                       </property>
+                       <property name="styleSheet">
+                        <string notr="true">background-color: rgb(189, 147, 249);</string>
                        </property>
                        <property name="text">
                         <string/>
@@ -2860,6 +2875,9 @@ p, li { white-space: pre-wrap; }
                        <property name="toolTip">
                         <string>Minimize</string>
                        </property>
+                       <property name="styleSheet">
+                        <string notr="true">background-color: rgb(189, 147, 249);</string>
+                       </property>
                        <property name="text">
                         <string/>
                        </property>
@@ -2885,7 +2903,6 @@ p, li { white-space: pre-wrap; }
                        </property>
                        <property name="font">
                         <font>
-                         <family>Segoe UI</family>
                          <pointsize>10</pointsize>
                          <italic>false</italic>
                          <bold>false</bold>
@@ -2926,7 +2943,7 @@ p, li { white-space: pre-wrap; }
                       <widget class="QLabel" name="graph_label">
                        <property name="geometry">
                         <rect>
-                         <x>30</x>
+                         <x>40</x>
                          <y>20</y>
                          <width>1160</width>
                          <height>585</height>
@@ -3216,6 +3233,63 @@ p, li { white-space: pre-wrap; }
                          <string>Описание состояния</string>
                         </property>
                        </column>
+                      </widget>
+                      <widget class="QLabel" name="pdf_label_2">
+                       <property name="geometry">
+                        <rect>
+                         <x>1210</x>
+                         <y>550</y>
+                         <width>161</width>
+                         <height>16</height>
+                        </rect>
+                       </property>
+                       <property name="text">
+                        <string>Сформировать pdf-граф</string>
+                       </property>
+                      </widget>
+                      <widget class="QPushButton" name="btn_pdf_2">
+                       <property name="geometry">
+                        <rect>
+                         <x>1170</x>
+                         <y>544</y>
+                         <width>28</width>
+                         <height>28</height>
+                        </rect>
+                       </property>
+                       <property name="minimumSize">
+                        <size>
+                         <width>28</width>
+                         <height>28</height>
+                        </size>
+                       </property>
+                       <property name="maximumSize">
+                        <size>
+                         <width>28</width>
+                         <height>28</height>
+                        </size>
+                       </property>
+                       <property name="cursor">
+                        <cursorShape>PointingHandCursor</cursorShape>
+                       </property>
+                       <property name="toolTip">
+                        <string>Minimize</string>
+                       </property>
+                       <property name="styleSheet">
+                        <string notr="true">background-color: rgb(168, 166, 255);</string>
+                       </property>
+                       <property name="text">
+                        <string/>
+                       </property>
+                       <property name="icon">
+                        <iconset>
+                         <normaloff>images/icons/cil-notes.png</normaloff>images/icons/cil-notes.png</iconset>
+                       </property>
+                       <property name="iconSize">
+                        <size>
+                         <width>80</width>
+                         <height>80</height>
+                        </size>
+                       </property>
                       </widget>
                      </widget>
                     </widget>

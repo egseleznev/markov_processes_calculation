@@ -58,6 +58,8 @@ class MainWindow(QMainWindow):
         widgets.btn_add_3.clicked.connect(self.buttonClick)
         widgets.btn_minus_3.clicked.connect(self.buttonClick)
         widgets.btn_clear_3.clicked.connect(self.buttonClick)
+        widgets.btn_label.clicked.connect(self.buttonClick)
+        widgets.btn_pdf_2.clicked.connect(self.buttonClick)
 
 
         def openCloseLeftBox():
@@ -81,6 +83,18 @@ class MainWindow(QMainWindow):
         btn = self.sender()
         btnName = btn.objectName()
 
+        if btnName == "btn_pdf_2":
+            try:
+                AppFunctions.printpdf(self,0)
+            except:
+                self.main = NoResult(2)
+                self.main.show()
+
+        if btnName == "btn_label":
+            widgets.stackedWidget.setCurrentWidget(widgets.home)
+            UIFunctions.resetStyle(self, btnName)
+            btn.setStyleSheet(UIFunctions.selectMenu(btn.styleSheet()))
+
         if btnName == "btn_theme":
             widgets.stackedWidget.setCurrentWidget(widgets.home)
             UIFunctions.resetStyle(self, "btn_draw")
@@ -102,7 +116,7 @@ class MainWindow(QMainWindow):
 
         if btnName == "btn_pdf":
             try:
-                AppFunctions.printpdf(self)
+                AppFunctions.printpdf(self, 1)
             except:
                 self.main = NoResult(2)
                 self.main.show()
@@ -243,7 +257,7 @@ class SplashScreen(QMainWindow):
         self.timer = QtCore.QTimer()
         self.timer.timeout.connect(self.progress)
 
-        self.timer.start(55)
+        self.timer.start(45)
 
         self.ui.label_description.setText("<strong>Одну</strong> секунду")
         QtCore.QTimer.singleShot(1500,

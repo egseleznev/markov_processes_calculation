@@ -9,12 +9,14 @@ files = ['ASD.ico', 'themes/', 'images/', 'DejaVuSansCondensed.ttf']
 target = Executable(
     script="main.py",
     base="Win32GUI",
-    icon="ASD.ico"
+    icon="ASD.ico",
+    shortcut_name='Калькулятор марковских процессов',
+    shortcut_dir='ProgramMenuFolder'
 )
 
 # SETUP CX FREEZE
 setup(
-    name="Расчет марковских процессов",
+    name="Калькулятор марковских процессов",
     version="1.0.1",
     description="Расчет марковских процессов",
     author="Seleznev Egor",

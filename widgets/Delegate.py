@@ -6,8 +6,10 @@ from DB.descriptions import *
 class TransitionsTableDelegate(QStyledItemDelegate):
     def createEditor(self, parent, option, index):
         editor = super(TransitionsTableDelegate, self).createEditor(parent, option, index)
-        if index.column() in (0,1,2):
+        if index.column() in (0, 1):
             editor = QSpinBox(parent)
+        else:
+            editor = QDoubleSpinBox(parent)
         return editor
 
     def setEditorData(self, editor, index):
@@ -20,7 +22,7 @@ class TransitionsTableDelegate(QStyledItemDelegate):
                 m = 1
                 M = length
             else:
-                m=1
+                m = 1
                 M = length -1
         else:
             m = 1
