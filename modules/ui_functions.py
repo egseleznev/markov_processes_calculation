@@ -152,9 +152,9 @@ class UIFunctions(MainWindow):
             if (i != 0):
                 self.ui.input_table.setRowCount(self.ui.input_table.rowCount() + 1)
             self.ui.input_table.setFixedHeight((self.ui.input_table.height() + 20))
-            self.ui.input_table.setItem(i, 0, QTableWidgetItem(str(data[i])[0]))
-            self.ui.input_table.setItem(i, 1, QTableWidgetItem(str(data[i])[2]))
-            self.ui.input_table.setItem(i, 2, QTableWidgetItem(str(data[i])[4]))
+            self.ui.input_table.setItem(i, 0, QTableWidgetItem(str(data[i]).split(" ")[0]))
+            self.ui.input_table.setItem(i, 1, QTableWidgetItem(str(data[i]).split(" ")[1]))
+            self.ui.input_table.setItem(i, 2, QTableWidgetItem(str(data[i]).split(" ")[2]))
         data = DBFunctions.selectdescription(self)
         for i in range(len(data)):
             if (i != 0):

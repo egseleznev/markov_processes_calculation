@@ -51,9 +51,9 @@ class AppFunctions(MainWindow):
         weights_vertex = list([])
         data = DBFunctions.selecttransition(self)
         for i in range(len(data)):
-            from_vertex.append(int(str(data[i])[0]))
-            to_vertex.append(int(str(data[i])[2]))
-            weights_vertex.append(int(str(data[i])[4]))
+            from_vertex.append(int(str(data[i]).split(" ")[0]))
+            to_vertex.append(int(str(data[i]).split(" ")[1]))
+            weights_vertex.append(float(str(data[i]).split(" ")[2]))
         concat = np.hstack((to_vertex, from_vertex))
         unique_numbers = list(set(concat))
         kolmagorov_coefs = np.zeros((len(unique_numbers), len(unique_numbers)))
@@ -82,7 +82,7 @@ class AppFunctions(MainWindow):
         for i in range(len(data[:data.index('#######')])):
             DBFunctions.insertdescription(self, str(data[:data.index('#######')][i]).split("~~")[0], str(data[:data.index('#######')][i]).split("~~")[1])
         for i in range(len(data[data.index('#######')+1:])):
-            DBFunctions.inserttransition(self, str(data[data.index('#######')+1:][i])[0], str(data[data.index('#######')+1:][i])[2], str(data[data.index('#######')+1:][i])[4])
+            DBFunctions.inserttransition(self, str(data[data.index('#######')+1:][i]).split(" ")[0], str(data[data.index('#######')+1:][i]).split(" ")[1], str(data[data.index('#######')+1:][i]).split(" ")[2])
 
     def printpdf(self, flag: bool):
         if flag:
@@ -90,7 +90,6 @@ class AppFunctions(MainWindow):
             pdf.add_page()
             pdf.add_font('DeJaVu','','DejaVuSansCondensed.ttf', uni=True)
             pdf.set_font('DejaVu', size=16)
-            pdf.image('graph_pdf.png', x=30, y=95, w=150)
             col_width = pdf.w / 5
             row_height = pdf.font_size
             pdf.cell(200, 7, txt="Результаты расчета марковского процесса", ln=1, align="C")
@@ -98,21 +97,41 @@ class AppFunctions(MainWindow):
             pdf.cell(200, 7, txt="с дискретными состояниями и непрерывным временем", ln=2, align="C")
             pdf.set_font('DejaVu', size=10)
             pdf.cell(200, 5, txt="(при t → ∞)", ln=3, align="C")
-            pdf.set_font('DejaVu', size=12)
-            pdf.ln(18)
-            pdf.cell(col_width, row_height, txt="Состояние")
-            pdf.cell(col_width, row_height, txt="Описание")
-            pdf.ln(row_height)
             pdf.set_font('DejaVu', size=11)
+            pdf.ln(18)
+            pdf.cell(col_width, row_height, txt="Состояние",border=1)
+            pdf.cell(col_width, row_height, txt="Описание",border=1)
+            pdf.ln(row_height)
+            pdf.set_font('DejaVu', size=10)
             for i in range(self.ui.input_table_2.rowCount()):
                 for j in range(self.ui.input_table_2.columnCount()):
                     pdf.cell(col_width, row_height, txt=(self.ui.input_table_2.item(i, j).text()))
                 pdf.ln(row_height)
-            pdf.set_font('DejaVu', size=14)
-            pdf.cell(100, 30, txt="Граф состояний:", ln=5, align="L")
-            pdf.set_y(200)
-            pdf.cell(100, 15, txt="Коэффициенты системы уравнений Колмогорова-Чепмена:", ln=6, align="L")
+            pdf.set_font('DejaVu', size=11)
+            pdf.ln(15)
+            pdf.cell(col_width, row_height, txt="Исходное состояние",border=1)
+            pdf.cell(col_width, row_height, txt="Состояние перехода",border=1)
+            pdf.cell(col_width+10, row_height, txt="Интенсивность перехода",border=1)
+            pdf.ln(row_height)
+            pdf.set_font('DejaVu', size=10)
+            for i in range(self.ui.input_table.rowCount()):
+                for j in range(self.ui.input_table.columnCount()):
+                    pdf.cell(col_width, row_height, txt=(self.ui.input_table.item(i, j).text()))
+                pdf.ln(row_height)
+
             pdf.set_font('DejaVu', size=12)
+            pdf.cell(100, 30, txt="Граф состояний:", ln=5, align="L")
+            if( self.ui.input_table.rowCount()> 11):
+                pdf.add_page()
+                pdf.image('graph_pdf.png', x=30, y=pdf.get_y() + 10, w=150)
+            else:
+                pdf.image('graph_pdf.png', x=30, y=pdf.get_y() - 10, w=150)
+            if (self.ui.input_table.rowCount() < 12):
+                pdf.set_y(pdf.get_y()+170)
+            else:
+                pdf.ln(130)
+            pdf.cell(100, 15, txt="Коэффициенты системы уравнений Колмогорова:", ln=6, align="L")
+            pdf.set_font('DejaVu', size=10)
             for i in kolmagorov_coefs_pdf:
                 k=1
                 for j in i:
@@ -120,14 +139,14 @@ class AppFunctions(MainWindow):
                     k=k+1
                 pdf.ln(row_height)
 
-            pdf.set_font('DejaVu', size=14)
+            pdf.set_font('DejaVu', size=12)
             pdf.cell(100, 15, txt="Результат:", ln=7, align="L")
             col_width = pdf.w / 3
-            pdf.set_font('DejaVu', size=12)
+            pdf.set_font('DejaVu', size=11)
             pdf.cell(col_width, row_height, txt="Состояние")
             pdf.cell(col_width, row_height, txt="Вероятность")
             pdf.ln(row_height)
-            pdf.set_font('DejaVu', size=11)
+            pdf.set_font('DejaVu', size=10)
             for i in range(self.ui.result_table.rowCount()):
                 for j in range(self.ui.result_table.columnCount()):
                     pdf.cell(col_width,row_height,txt=(self.ui.result_table.item(i, j).text()),border=1)

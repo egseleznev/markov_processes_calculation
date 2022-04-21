@@ -26,7 +26,7 @@ class Ui_MainWindow(object):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
         MainWindow.resize(1580, 720)
-        MainWindow.setMinimumSize(QSize(940, 560))
+        MainWindow.setMinimumSize(QSize(1580, 720))
         self.styleSheet = QWidget(MainWindow)
         self.styleSheet.setObjectName(u"styleSheet")
         font = QFont()
