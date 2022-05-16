@@ -1,7 +1,7 @@
 
 QWidget{
 	color: #333;
-	font: 10pt "Segoe UI";
+	font: 11pt "Segoe UI";
 }
 
 /* /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -39,7 +39,7 @@ Left Menu */
 	background-repeat: no-repeat;
 }
 #titleLeftApp { font: 63 12pt "Segoe UI Semibold"; color: #f8f8f2; }
-#titleLeftDescription { font: 8pt "Segoe UI"; color: #bd93f9; }
+#titleLeftDescription { font: 10pt "Segoe UI"; color: #bd93f9; }
 
 /* MENUS */
 #topMenu .QPushButton {	

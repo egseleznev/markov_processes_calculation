@@ -49,8 +49,10 @@ class UIFunctions(MainWindow):
 
             if width == 60:
                 widthExtended = maxExtend
+                self.resize(QSize(int(self.width())+100, 720))
             else:
                 widthExtended = standard
+                self.resize(QSize(int(self.width())-100, 720))
 
             self.animation = QPropertyAnimation(self.ui.leftMenuBg, b"minimumWidth")
             self.animation.setDuration(Settings.TIME_ANIMATION)
@@ -76,10 +78,11 @@ class UIFunctions(MainWindow):
                 if widthRightBox != 0:
                     style = self.ui.settingsTopBtn.styleSheet()
                     self.ui.settingsTopBtn.setStyleSheet(style.replace(Settings.BTN_RIGHT_BOX_COLOR, ''))
+                self.resize((QSize(int(self.width())+250, 720)))
             else:
                 widthExtended = standard
                 self.ui.toggleLeftBox.setStyleSheet(style.replace(color, ''))
-
+                self.resize((QSize(int(self.width()) - 250, 720)))
         UIFunctions.start_box_animation(self, width, widthRightBox, "left")
 
 
@@ -193,7 +196,10 @@ class UIFunctions(MainWindow):
         #self.ui.graph_label.setText("")
         #pixmap=QPixmap("graph.png")
         #self.ui.graph_label.setPixmap(pixmap)
-        self.ui.btn_label.setIcon(QIcon('graph.png'))
+        if Settings.CHANGE_THEME:
+            self.ui.btn_label.setIcon(QIcon('graph_pdf.png'))
+        else:
+            self.ui.btn_label.setIcon(QIcon('graph.png'))
         self.ui.btn_label.setIconSize(QSize(800, 600))
         self.show()
 

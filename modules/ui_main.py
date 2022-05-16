@@ -25,8 +25,8 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(1580, 720)
-        MainWindow.setMinimumSize(QSize(1580, 720))
+        MainWindow.resize(1650, 720)
+        MainWindow.setMinimumSize(QSize(1650, 720))
         self.styleSheet = QWidget(MainWindow)
         self.styleSheet.setObjectName(u"styleSheet")
         font = QFont()
@@ -37,7 +37,7 @@ class Ui_MainWindow(object):
         self.styleSheet.setStyleSheet(u"\n"
 "QWidget{\n"
 "	color: rgb(221, 221, 221);\n"
-"	font: 10pt \"Segoe UI\";\n"
+"	font: 20pt \"Segoe UI\";\n"
 "}\n"
 "\n"
 "/* /////////////////////////////////////////////////////////////////////////////////////////////////\n"
@@ -74,8 +74,8 @@ class Ui_MainWindow(object):
 "	background-position: centered;\n"
 "	background-repeat: no-repeat;\n"
 "}\n"
-"#titleLeftApp { font: 63 12pt \"Segoe UI Semibold\"; }\n"
-"#titleLeftDescription { font: 8pt \"Segoe UI\"; color: rgb(168, 166, 255); }\n"
+"#titleLeftApp { font: 63 16pt \"Segoe UI Semibold\"; }\n"
+"#titleLeftDescription { font: 10pt \"Segoe UI\"; color: rgb(168, 166, 255); }\n"
 "\n"
 "/* MENUS */\n"
 "#topMenu .QPushButton {	\n"
@@ -819,7 +819,7 @@ class Ui_MainWindow(object):
         self.btn_theme.setFont(font)
         self.btn_theme.setCursor(QCursor(Qt.PointingHandCursor))
         self.btn_theme.setLayoutDirection(Qt.LeftToRight)
-        self.btn_theme.setStyleSheet(u"background-image: url(:/icons/images/icons/cil-lightbulb.png);")
+        self.btn_theme.setStyleSheet(u"background-image: url(:/icons/images/icons/cil-moon.png);")
         self.verticalLayout_11.addWidget(self.btn_theme)
 
         self.verticalLayout_12.addWidget(self.extraTopMenu, 0, Qt.AlignTop)
@@ -1075,7 +1075,7 @@ class Ui_MainWindow(object):
         self.btn_pdf.setIconSize(QSize(80, 80))
         self.pdf_label = QLabel(self.calculation)
         self.pdf_label.setObjectName(u"pdf_label")
-        self.pdf_label.setGeometry(QRect(90, 550, 161, 16))
+        self.pdf_label.setGeometry(QRect(90, 550, 175, 20))
         self.stackedWidget.addWidget(self.calculation)
         self.home = QWidget()
         self.input_table_2 = QTableWidget(self.home)
@@ -1128,26 +1128,26 @@ class Ui_MainWindow(object):
         self.btn_clear_3.setStyleSheet(u"background-color: rgb(168, 166, 255);")
         self.remove_label_3 = QLabel(self.home)
         self.remove_label_3.setObjectName(u"remove_label_3")
-        self.remove_label_3.setGeometry(QRect(500, 556, 141, 16))
+        self.remove_label_3.setGeometry(QRect(500, 556, 141, 20))
         self.add_label_3 = QLabel(self.home)
         self.add_label_3.setObjectName(u"add_label_3")
-        self.add_label_3.setGeometry(QRect(500, 455, 141, 16))
+        self.add_label_3.setGeometry(QRect(500, 455, 141, 20))
         self.delete_label_3 = QLabel(self.home)
         self.delete_label_3.setObjectName(u"delete_label_3")
-        self.delete_label_3.setGeometry(QRect(500, 505, 141, 16))
+        self.delete_label_3.setGeometry(QRect(500, 505, 141, 20))
         self.label_1 = QLabel(self.home)
         self.label_1.setObjectName(u"label_1")
         self.label_1.setGeometry(QRect(110, -10, 221, 41))
         font4 = QFont()
         font4.setFamilies([u"Segoe UI"])
-        font4.setPointSize(12)
+        font4.setPointSize(14)
         font4.setBold(True)
         font4.setItalic(False)
         self.label_1.setFont(font4)
         self.label_1.setAlignment(Qt.AlignCenter)
         self.label_2 = QLabel(self.home)
         self.label_2.setObjectName(u"label_2")
-        self.label_2.setGeometry(QRect(780, -10, 271, 41))
+        self.label_2.setGeometry(QRect(780, -10, 285, 41))
         self.label_2.setFont(font)
         self.label_2.setAlignment(Qt.AlignCenter)
         self.btn_add_3 = QPushButton(self.home)
@@ -1289,19 +1289,19 @@ class Ui_MainWindow(object):
         self.btn_add.setIconSize(QSize(80, 80))
         self.edit_label = QLabel(self.home)
         self.edit_label.setObjectName(u"edit_label")
-        self.edit_label.setGeometry(QRect(1140, 46, 91, 16))
+        self.edit_label.setGeometry(QRect(1140, 46, 95, 18))
         self.save_label = QLabel(self.home)
         self.save_label.setObjectName(u"save_label")
-        self.save_label.setGeometry(QRect(1140, 94, 141, 16))
+        self.save_label.setGeometry(QRect(1140, 94, 145, 18))
         self.add_label = QLabel(self.home)
         self.add_label.setObjectName(u"add_label")
-        self.add_label.setGeometry(QRect(1290, 455, 141, 16))
+        self.add_label.setGeometry(QRect(1290, 455, 145, 18))
         self.delete_label = QLabel(self.home)
         self.delete_label.setObjectName(u"delete_label")
-        self.delete_label.setGeometry(QRect(1290, 505, 141, 16))
+        self.delete_label.setGeometry(QRect(1290, 505, 145, 18))
         self.remove_label = QLabel(self.home)
         self.remove_label.setObjectName(u"remove_label")
-        self.remove_label.setGeometry(QRect(1290, 556, 141, 16))
+        self.remove_label.setGeometry(QRect(1290, 556, 145, 18))
 
         self.stackedWidget.addWidget(self.home)
         self.draw = QWidget()
@@ -1378,7 +1378,7 @@ class Ui_MainWindow(object):
         self.input_table_5.setEditTriggers(QAbstractItemView.NoEditTriggers)
         self.pdf_label_2 = QLabel(self.draw)
         self.pdf_label_2.setObjectName(u"pdf_label_2")
-        self.pdf_label_2.setGeometry(QRect(1210, 550, 161, 16))
+        self.pdf_label_2.setGeometry(QRect(1210, 550, 175, 20))
         self.btn_pdf_2 = QPushButton(self.draw)
         self.btn_pdf_2.setObjectName(u"btn_pdf_2")
         self.btn_pdf_2.setGeometry(QRect(1170, 544, 28, 28))
@@ -1514,7 +1514,7 @@ class Ui_MainWindow(object):
         self.textEdit.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'Segoe UI'; font-size: 9pt; font-weight:400; font-style:normal;\">\n"
+"</style></head><body style=\" font-family:'Segoe UI'; font-size: 11pt; font-weight:400; font-style:normal;\">\n"
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:12pt; font-weight:600; color:#a8a6ff;\">\u041f\u0440\u0438\u043b\u043e\u0436\u0435\u043d\u0438\u0435 \u043f\u0440\u0435\u0434\u043d\u0430\u0437\u043d\u0430\u0447\u0435\u043d\u043e \u0434\u043b\u044f \u0440\u0430\u0441\u0447\u0435\u0442\u0430 \u043c\u0430\u0440\u043a\u043e\u0432\u0441\u043a\u0438\u0445 \u043f\u0440\u043e\u0446\u0435\u0441\u0441\u043e\u0432 \u0441 \u043d\u0435\u043f\u0440\u0435\u0440\u044b\u0432\u043d\u044b\u043c \u0432\u0440\u0435\u043c\u0435\u043d\u0435\u043c \u0438 \u0434\u0438"
                         "\u0441\u043a\u0440\u0435\u0442\u043d\u044b\u043c \u0441\u043e\u0441\u0442\u043e\u044f\u043d\u0438\u0435\u043c \u0432 \u0441\u0442\u0430\u0446\u0438\u043e\u043d\u0430\u0440\u043d\u043e\u043c \u0440\u0435\u0436\u0438\u043c\u0435</span></p>\n"
 "<p align=\"center\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" color:#ffffff;\">\u0418\u043d\u0442\u0435\u0440\u0444\u0435\u0439\u0441 \u0441\u043e\u0437\u0434\u0430\u043d \u0441 \u0438\u0441\u043f\u043e\u043b\u044c\u0437\u043e\u0432\u0430\u043d\u0438\u0435\u043c PySide(\u043f\u043e\u0434\u0434\u0435\u0440\u0436\u043a\u0430 PyQT)</span></p>\n"

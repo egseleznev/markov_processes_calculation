@@ -135,7 +135,7 @@ class AppFunctions(MainWindow):
             for i in kolmagorov_coefs_pdf:
                 k=1
                 for j in i:
-                    pdf.cell(col_width,row_height,txt=(str(j)+" x"+str(k)))
+                    pdf.cell(col_width-10,row_height,txt=(str(j)+" x"+str(k)))
                     k=k+1
                 pdf.ln(row_height)
 

@@ -70,7 +70,7 @@ class MainWindow(QMainWindow):
 
         self.show()
 
-        useCustomTheme = False
+        useCustomTheme = True
         themeFile = "themes\light.qss"
         if useCustomTheme:
             UIFunctions.theme(self, themeFile, True)
@@ -101,18 +101,18 @@ class MainWindow(QMainWindow):
             UIFunctions.resetStyle(self, "btn_calculate")
             widgets.btn_home.setStyleSheet(UIFunctions.selectMenu(widgets.btn_home.styleSheet()))
             if Settings.CHANGE_THEME:
-                themeFile = "themes\light.qss"
-                UIFunctions.theme(self, themeFile, True)
-                AppFunctions.setThemeHack(self)
-                Settings.CHANGE_THEME = False
-                self.ui.btn_theme.setStyleSheet(u"background-image: url(:/icons/images/icons/cil-moon.png);")
-
-            else:
-                Settings.CHANGE_THEME = True
                 themeFile = "themes\dark.qss"
                 UIFunctions.theme(self, themeFile, True)
                 AppFunctions.setThemeHack(self)
+                Settings.CHANGE_THEME = False
                 self.ui.btn_theme.setStyleSheet(u"background-image: url(:/icons/images/icons/cil-lightbulb.png);")
+
+            else:
+                Settings.CHANGE_THEME = True
+                themeFile = "themes\light.qss"
+                UIFunctions.theme(self, themeFile, True)
+                AppFunctions.setThemeHack(self)
+                self.ui.btn_theme.setStyleSheet(u"background-image: url(:/icons/images/icons/cil-moon.png);")
 
         if btnName == "btn_pdf":
             try:
